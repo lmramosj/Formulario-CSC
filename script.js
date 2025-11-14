@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // --- Objeto con las líneas de negocio ---
     const lineasPorUnidad = {
         "Salud": [
-            "Director Salud", "Prestación Salud", "Ejecutivo EPS y Consorcio", 
+            // CAMBIO 2: LÍNEA DE NEGOCIO SALUD
+            "Directora Salud", "Prestación Salud", "Ejecutivo EPS y Consorcio", 
             "Planeación", "Planes voluntarios", "TI", "Servicios Ambulatorios", 
             "Inmunización", "Cirugía", "Salud Oral", "Laboratorio", "Patología"
         ],
@@ -45,14 +46,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // --- PARTE 1: LÓGICA CONDICIONAL DE CHECKBOX ---
+    // CAMBIO 3: AÑADIDOS LOS NUEVOS PROCESOS
     const procesos = [
         "Innovacion", "Estrategia", "Compras", "Juridicos",
-        "Informacion", "Administracion", "Finanzas", "Plataforma"
+        "Informacion", "Administracion", "Finanzas", "Plataforma",
+        "Seguridad", "Sostenibilidad"
     ];
 
     procesos.forEach(proceso => {
-        const checkbox = document.getElementById(proceso.toLowerCase());
-        const camposDiv = document.getElementById(`campos-${proceso}`);
+        // Corrección para IDs en minúscula (ej. 'innovacion')
+        const idProceso = proceso.toLowerCase(); 
+        const checkbox = document.getElementById(idProceso);
+        
+        // El ID del campo sigue la capitalización del array (ej. 'campos-Innovacion')
+        const camposDiv = document.getElementById(`campos-${proceso}`); 
+        
         if (checkbox && camposDiv) {
             checkbox.addEventListener('change', function() {
                 if (this.checked) {
@@ -61,8 +69,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     camposDiv.classList.remove('visible');
                 }
             });
+        } else {
+            // Ayuda para depuración si hay un desajuste de nombres
+            if (!checkbox) console.warn(`No se encontró el checkbox con id: ${idProceso}`);
+            if (!camposDiv) console.warn(`No se encontró el div de campos con id: campos-${proceso}`);
         }
     });
+
 
     // --- PARTE 2: MANEJO DEL ENVÍO (CON LÓGICA DE REINTENTO) ---
     const formulario = document.getElementById('miFormulario');
@@ -118,5 +131,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-
-
