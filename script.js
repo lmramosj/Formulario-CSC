@@ -3,13 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // --- Objeto con las líneas de negocio ---
     const lineasPorUnidad = {
         "Salud": [
-            // CAMBIO 2: LÍNEA DE NEGOCIO SALUD
             "Directora Salud", "Prestación Salud", "Ejecutivo EPS y Consorcio", 
             "Planeación", "Planes voluntarios", "TI", "Servicios Ambulatorios", 
             "Inmunización", "Cirugía", "Salud Oral", "Laboratorio", "Patología"
         ],
         "Bienestar y Desarrollo": [
-            "Director Bienestar", "Mercadeo", "R+D", "Educación", 
+            "Director bienestar", "Mercadeo", "R+D", "Educación", 
             "Empleo y fomento empresarial", "Subsidio", "Vivienda", "Eventos", 
             "Alimentos", "Alojamiento", "TI"
         ],
@@ -46,19 +45,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // --- PARTE 1: LÓGICA CONDICIONAL DE CHECKBOX ---
-    // CAMBIO 3: AÑADIDOS LOS NUEVOS PROCESOS
+    // CAMBIO FINAL: PROCESOS CORREGIDOS
     const procesos = [
         "Innovacion", "Estrategia", "Compras", "Juridicos",
         "Informacion", "Administracion", "Finanzas", "Plataforma",
-        "Seguridad", "Sostenibilidad"
+        "Seguridad_Sostenibilidad", "ComunidadTI" 
     ];
 
     procesos.forEach(proceso => {
-        // Corrección para IDs en minúscula (ej. 'innovacion')
+        // Usa el nombre del array tal cual, asumiendo que el ID del checkbox es minúscula
+        // ej. 'Seguridad_Sostenibilidad' -> id="seguridad_sostenibilidad"
+        // ej. 'ComunidadTI' -> id="comunidadti"
         const idProceso = proceso.toLowerCase(); 
         const checkbox = document.getElementById(idProceso);
         
-        // El ID del campo sigue la capitalización del array (ej. 'campos-Innovacion')
+        // El ID del campo usa el nombre del array, ej. 'campos-Seguridad_Sostenibilidad'
         const camposDiv = document.getElementById(`campos-${proceso}`); 
         
         if (checkbox && camposDiv) {
@@ -70,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         } else {
-            // Ayuda para depuración si hay un desajuste de nombres
             if (!checkbox) console.warn(`No se encontró el checkbox con id: ${idProceso}`);
             if (!camposDiv) console.warn(`No se encontró el div de campos con id: campos-${proceso}`);
         }
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const formulario = document.getElementById('miFormulario');
     const botonEnviar = document.getElementById('submit-button');
     const mensajeStatus = document.getElementById('status-mensaje');
-    const urlScript = 'https://script.google.com/macros/s/AKfycbyBFyhMmqMgF1_xODUkRTGRUI5sQJRNvJO_j-36jZiIoJV-Yv9xmTuD3SGlfIp5NXh6/exec'; // ¡Asegúrate que tu URL esté aquí!
+    const urlScript = 'TU_URL_DE_APPS_SCRIPT_AQUI'; // ¡Asegúrate que tu URL esté aquí!
 
     // Listener principal del formulario
     formulario.addEventListener('submit', function(e) {
@@ -131,4 +131,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-
