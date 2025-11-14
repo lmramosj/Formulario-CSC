@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "Inmunización", "Cirugía", "Salud Oral", "Laboratorio", "Patología"
         ],
         "Bienestar y Desarrollo": [
-            "Director bienestar", "Mercadeo", "R+D", "Educación", 
+            "Director Bienestar", "Mercadeo", "R+D", "Educación", 
             "Empleo y fomento empresarial", "Subsidio", "Vivienda", "Eventos", 
             "Alimentos", "Alojamiento", "TI"
         ],
@@ -131,3 +131,4 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
