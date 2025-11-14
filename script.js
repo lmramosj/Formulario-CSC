@@ -26,14 +26,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     selectorUnidad.addEventListener('change', function() {
         const unidadSeleccionada = this.value;
-
         selectorLinea.innerHTML = '<option value="">-- Selecciona una opción --</option>';
 
         if (unidadSeleccionada) {
             paso2.style.display = 'block';
-
             const lineas = lineasPorUnidad[unidadSeleccionada];
-            
             if (lineas) {
                 lineas.forEach(linea => {
                     const opcion = document.createElement('option');
@@ -42,14 +39,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     selectorLinea.appendChild(opcion);
                 });
             }
-            
         } else {
             paso2.style.display = 'none';
         }
     });
 
     // --- PARTE 1: LÓGICA CONDICIONAL DE CHECKBOX ---
-
     const procesos = [
         "Innovacion", "Estrategia", "Compras", "Juridicos",
         "Informacion", "Administracion", "Finanzas", "Plataforma"
@@ -58,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
     procesos.forEach(proceso => {
         const checkbox = document.getElementById(proceso.toLowerCase());
         const camposDiv = document.getElementById(`campos-${proceso}`);
-
         if (checkbox && camposDiv) {
             checkbox.addEventListener('change', function() {
                 if (this.checked) {
@@ -70,52 +64,58 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // --- PARTE 2: MANEJO DEL ENVÍO DEL FORMULARIO (MODIFICADO) ---
-
+    // --- PARTE 2: MANEJO DEL ENVÍO (CON LÓGICA DE REINTENTO) ---
     const formulario = document.getElementById('miFormulario');
     const botonEnviar = document.getElementById('submit-button');
     const mensajeStatus = document.getElementById('status-mensaje');
+    const urlScript = 'TU_URL_DE_APPS_SCRIPT_AQUI'; // ¡Asegúrate que tu URL esté aquí!
 
-    const urlScript = 'https://script.google.com/macros/s/AKfycbyBFyhMmqMgF1_xODUkRTGRUI5sQJRNvJO_j-36jZiIoJV-Yv9xmTuD3SGlfIp5NXh6/exec'; 
-
+    // Listener principal del formulario
     formulario.addEventListener('submit', function(e) {
         e.preventDefault();
-
         mensajeStatus.textContent = 'Enviando... por favor espera.';
         mensajeStatus.style.color = '#333';
         botonEnviar.disabled = true;
 
-        const formData = new FormData(formulario);
+        // Inicia el primer intento de envío
+        enviarFormulario(new FormData(formulario), 1); // Intento 1
+    });
 
+    // Función de envío que puede reintentar
+    function enviarFormulario(formData, intento) {
+        
         fetch(urlScript, {
             method: 'POST',
             body: formData
         })
         .then(response => {
             if (response.ok) {
-                // ÉXITO: Muestra el mensaje de gracias
+                // ÉXITO
                 mensajeStatus.textContent = '¡Gracias! Tu solicitud ha sido recibida.';
                 mensajeStatus.style.color = 'green';
-                
-                // --- CAMBIO CLAVE: YA NO SE RESETEA EL FORMULARIO ---
-                setTimeout(() => { 
-                    mensajeStatus.textContent = ''; // Solo limpia el mensaje de status
-                }, 3000); 
-
-                // Re-habilita el botón inmediatamente después del envío exitoso
-                botonEnviar.disabled = false;
+                botonEnviar.disabled = false; // Habilita el botón
+                setTimeout(() => { mensajeStatus.textContent = ''; }, 4000); // Limpia el mensaje
             } else {
-                // FALLO
-                throw new Error('Error de conexión o configuración del servidor.');
+                // Falla del servidor (ej. 500)
+                throw new Error('Fallo del servidor');
             }
         })
         .catch(error => {
-            // Manejo de errores de red o conexión
-            console.error('Error:', error);
-            mensajeStatus.textContent = 'Error al enviar la solicitud. Intenta de nuevo.';
-            mensajeStatus.style.color = 'red';
-            botonEnviar.disabled = false;
+            console.error('Error en intento ' + intento + ':', error);
+            
+            // Si es el primer intento, reintenta una vez
+            if (intento === 1) {
+                console.log('Reintentando envío...');
+                setTimeout(() => {
+                    enviarFormulario(formData, 2); // Intento 2
+                }, 1000); // Espera 1 segundo
+            } else {
+                // Si falla en el segundo intento, muestra el error final
+                mensajeStatus.textContent = 'Error al enviar la solicitud. Revisa tu conexión.';
+                mensajeStatus.style.color = 'red';
+                botonEnviar.disabled = false;
+            }
         });
-    });
+    }
 });
 
