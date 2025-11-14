@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const botonEnviar = document.getElementById('submit-button');
     const mensajeStatus = document.getElementById('status-mensaje');
 
-    const urlScript = 'TU_URL_DE_APPS_SCRIPT_AQUI'; 
+    const urlScript = 'https://script.google.com/macros/s/AKfycbyBFyhMmqMgF1_xODUkRTGRUI5sQJRNvJO_j-36jZiIoJV-Yv9xmTuD3SGlfIp5NXh6/exec'; 
 
     formulario.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -118,3 +118,4 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
