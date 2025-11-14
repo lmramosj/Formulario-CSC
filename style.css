@@ -1,0 +1,179 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Fondo sutil */
+    background-color: #f4f7f6;
+    overflow-x: hidden; /* Evita barras de desplazamiento horizontal por los círculos */
+    position: relative;
+    min-height: 100vh; /* Asegura que el fondo cubra toda la página */
+}
+
+/* --- Fondo Estético: Círculos Degradados --- */
+
+/* Círculo Naranja (#ff6600) - Esquina superior izquierda */
+body::before {
+    content: '';
+    position: fixed;
+    top: -20vh;
+    left: -20vw;
+    width: 60vh;
+    height: 60vh;
+    border-radius: 50%;
+    /* Gradiente radial usando el naranja y un color más claro */
+    background: radial-gradient(circle, rgba(255, 102, 0, 0.5), rgba(255, 102, 0, 0)); 
+    filter: blur(100px); /* Desenfoque para el efecto suave */
+    z-index: 1; /* Detrás del formulario */
+}
+
+/* Círculo Morado (#740b81) - Esquina inferior derecha */
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -20vh;
+    right: -20vw;
+    width: 70vh;
+    height: 70vh;
+    border-radius: 50%;
+    /* Gradiente radial usando el morado y un color transparente */
+    background: radial-gradient(circle, rgba(116, 11, 129, 0.4), rgba(116, 11, 129, 0));
+    filter: blur(120px);
+    z-index: 1;
+}
+
+/* --- Estilo del Formulario (Asegurar que esté por encima) --- */
+
+form {
+    max-width: 800px;
+    margin: 40px auto; /* Más margen para separar del borde */
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semi-transparente */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    position: relative; /* Necesario para que el z-index funcione */
+    z-index: 10; /* Siempre por encima de los círculos de fondo */
+}
+
+
+/* --- El resto del estilo sigue siendo el mismo --- */
+
+.encabezado {
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #333;
+    font-weight: 700;
+}
+
+.intro {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.5;
+    max-width: 90%;
+    margin: 10px auto 0;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #ff6600; /* Color Naranja */
+    margin-top: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.seccion-form {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box; 
+    font-size: 16px;
+}
+
+textarea {
+    height: 100px;
+    margin-bottom: 15px;
+}
+
+.checkbox-container {
+    padding: 15px;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.checkbox-container input {
+    margin-right: 10px;
+}
+
+.checkbox-container label {
+    font-weight: 500;
+    display: inline;
+    margin-bottom: 10px;
+}
+
+.proceso-campos {
+    display: none;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 20px;
+    background-color: #fdfdfd;
+}
+
+.proceso-campos.visible {
+    display: block;
+}
+
+#paso-2 {
+    display: none;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #ff6600; /* Color Naranja */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #e65c00; /* Naranja más oscuro */
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#status-mensaje {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 15px;
+}
